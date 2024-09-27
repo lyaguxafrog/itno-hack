@@ -1,0 +1,29 @@
+
+table users {
+  id int [pk]
+
+  username char(64) [not null, unique]
+  hash_password char(1024) [not null]
+
+
+}
+
+
+table projects {
+  id int [pk]
+
+  name char(1024) [not null]
+  create_date timestamp [not null]
+
+  owner int [note: "fk", ref: > users.id]
+  user int [ref: <> users.id]
+} 
+
+
+table tasks {
+  id int [pk]
+
+  project int [ref: > projects.id]
+  title char(64) [not null]
+  status enum(0,2) [not null, default: True]
+}
