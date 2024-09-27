@@ -23,7 +23,7 @@ class Mutation(
     ProjectMutation,
     TaskMutation,
     ObjectType,
-
+):
     pass
 
 
