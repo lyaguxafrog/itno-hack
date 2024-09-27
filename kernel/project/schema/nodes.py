@@ -3,7 +3,7 @@ from graphene import relay
 from graphene_django import DjangoObjectType
 
 from project.models import Project 
-from user.schema.nodes import UserNode
+from users.schema.nodes import UserNode
 
 
 class ProjectNode(DjangoObjectType):
@@ -15,15 +15,13 @@ class ProjectNode(DjangoObjectType):
     class Meta:
         model = Project 
         interfaces = [relay.Node,]
-        # fields = [
-        #     'phone',
-        #     'email',
-        #     'first_name',
-        #     'last_name',
-        #     'role',
-        #     # 'date_of_birth'
-        # ]
+        fields = [
+            'name',
+            'create_date',
+            'owner',
+            'user',
+        ]
 
         # read_only_fields = [
-        #     'phone'
+        #     'create_date'
         # ]

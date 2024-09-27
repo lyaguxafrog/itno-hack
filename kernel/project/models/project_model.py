@@ -6,7 +6,6 @@ class Project(models.Model):
 
     name = models.CharField(
         max_length=1024,
-
         verbose_name=_("Название"),
     )
     create_date = models.DateTimeField(

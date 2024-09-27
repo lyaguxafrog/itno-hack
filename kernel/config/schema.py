@@ -2,6 +2,7 @@
 
 import graphene
 from graphene import ObjectType, Schema
+from project.schema import Mutations as ProjectMutation
 
 
 class Query(ObjectType):
@@ -11,11 +12,14 @@ class Query(ObjectType):
         return 'world!'
 
 
-# class Mutation(ObjectType):
-#     pass
+class Mutation(
+    ObjectType,
+    ProjectMutation
+):
+    pass
 
 
 schema = Schema(
     query=Query,
-    # mutation=Mutation,
+    mutation=Mutation,
 )

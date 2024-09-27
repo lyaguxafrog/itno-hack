@@ -2,7 +2,7 @@
 
 from graphene import ObjectType
 
-from .mutations import Mutation as UserMutation
+from .mutations import Mutation as ProjectMutation
 
 class Query(
     ObjectType,
@@ -10,8 +10,8 @@ class Query(
     pass
 
 
-class Mutation(
-    UserMutation,
+class Mutations(
+    ProjectMutation,
     ObjectType
 ):
     pass
