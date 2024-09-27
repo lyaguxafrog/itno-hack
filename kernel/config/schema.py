@@ -3,12 +3,12 @@
 import graphene
 from graphene import ObjectType, Schema
 from project.schema import Mutations as ProjectMutation
-
-# from users.schema import Mutations as UserMutations
+from project.schema import Query as ProjectQuery
 from tasks.schema import Mutations as TaskMutation
 
 
 class Query(
+    ProjectQuery,
     ObjectType,
 ):
     hello = graphene.String()
