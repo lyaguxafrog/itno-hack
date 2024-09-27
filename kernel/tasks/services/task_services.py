@@ -19,7 +19,7 @@ def create_task(
 ) -> Task:
     try:
         cache.delete(key='tasks')
-        event = Task.objects.create(
+        task = Task.objects.create(
             title=title,
             status=status,
             project=project
@@ -27,7 +27,7 @@ def create_task(
     except Exception as err:
         raise Exception(err)
 
-    return event
+    return task
 
 
 @atomic
@@ -76,7 +76,7 @@ def get_tasks() -> QuerySet:
 
     if cache_:
         cache.set(
-            key='events',
+            key='tasks',
             value=cache_,
             timeout=1209600
         )
@@ -93,13 +93,13 @@ def get_tasks() -> QuerySet:
 
 def get_tasks_for_project(project: Project) -> QuerySet:
     """
-    Функция для получения всех событий
+    Функция для получения всех task for project
     """
-    cache_ = cache.get(key='tasks')
-
+    project_id = project.id
+    cache_ = cache.get(key=f'tasks_proj{project_id}')
     if cache_:
         cache.set(
-            key='events',
+            key=f'tasks_proj{project_id}',
             value=cache_,
             timeout=1209600
         )
@@ -107,7 +107,7 @@ def get_tasks_for_project(project: Project) -> QuerySet:
     else:
         tasks = Task.objects.filter(project=project, is_archive=False).all()
         cache.set(
-            key='tasks',
+            key=f'tasks_proj{project_id}',
             value=tasks,
             timeout=1209600
         )

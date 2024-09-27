@@ -2,19 +2,19 @@
 
 from graphene import ObjectType
 
-from .queries import Query as EventQuery
-from .mutations import Mytation as EventMutations
+from .queries import Query as TaskQuery
+from .mutations import Mytation as TaskMutations
 
 
 class Query(
-    EventQuery,
+    TaskQuery,
     ObjectType,
 ):
     pass
 
 
 class Mutations(
-    EventMutations,
+    TaskMutations,
     ObjectType,
 ):
     pass
