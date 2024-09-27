@@ -23,6 +23,8 @@ INSTALLED_APPS = [
 
     # APPS:
 
+    'users'
+
 ]
 
 MIDDLEWARE = [
