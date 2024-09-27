@@ -38,7 +38,7 @@ class CreateTaksMutation(relay.ClientIDMutation):
             task = create_task(
                 title=input['title'],
                 status=input['status'],
-                project=input['project'],
+                project=info.context.project,
             )
 
         except Exception as err:

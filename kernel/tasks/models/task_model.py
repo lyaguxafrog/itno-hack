@@ -3,7 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from project.model.project_model import Project
+from project.models.project_model import Project
 
 class Task(models.Model):
     """

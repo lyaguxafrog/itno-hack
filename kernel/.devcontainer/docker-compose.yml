@@ -10,7 +10,7 @@ services:
       POSTGRES_DB: db
       POSTGRES_PASSWORD: Passw0rd33
     ports:
-      - 5432:5432
+      - 54323:5432
 
   kernel:
     user: vscode
@@ -22,5 +22,5 @@ services:
     volumes:
       - '..:/workspace:cached'
     ports:
-      - '5000:5000'
+      - '8000:8000'
     command: sleep infinity
