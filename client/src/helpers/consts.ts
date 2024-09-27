@@ -10,3 +10,8 @@ export const routes = {
 export const links = {
   //
 } as const;
+
+export const SliceNames = {
+  state: 'state-slice',
+  data: 'data-slice',
+} as const;
