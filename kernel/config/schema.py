@@ -12,6 +12,7 @@ class Query(
     TaskQuery,
     ObjectType,
 ):
+
     hello = graphene.String()
 
     def resolve_hello(root, info, **kwargs):
@@ -22,7 +23,7 @@ class Mutation(
     ProjectMutation,
     TaskMutation,
     ObjectType,
-):
+
     pass
 
 
