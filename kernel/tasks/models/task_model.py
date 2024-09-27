@@ -3,7 +3,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from project.models.project_model import Project
 
 class Task(models.Model):
     """
@@ -20,9 +19,9 @@ class Task(models.Model):
     ]
 
     project = models.ForeignKey(
-        "Project",
-        on_delete=models.SET_NULL,
-        db_index=False,
+        "project.Project",
+        related_name="project",
+        on_delete=models.CASCADE,
         null=False,
     )
 

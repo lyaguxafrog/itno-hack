@@ -6,7 +6,8 @@ from datetime import datetime
 from django.db.transaction import atomic
 from django.db.models import QuerySet
 from django.core.cache import cache
-from django.contrib.auth.models import Project
+
+from project.models import Project
 
 from tasks.models import Task
 

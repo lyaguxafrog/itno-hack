@@ -14,6 +14,7 @@ class Project(models.Model):
     )
     owner = models.ForeignKey(
         'auth.User',
+        related_name='owner',
         on_delete=models.CASCADE,
         verbose_name=_("Владелец")
     ) 

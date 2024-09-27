@@ -67,9 +67,9 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'db'),
         'USER': os.getenv('DB_USER', 'developer'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'Passw0rd33'),
-        # 'HOST': 'db',
-        'HOST': '127.0.0.1',
-        # 'PORT': '5432',
+        'HOST': 'db',
+        # 'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -112,6 +112,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 GRAPHENE = {
     "SCHEMA": "config.schema.schema"
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 try:
     from .local_settings import *
