@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # APPS:
+    'project'
 
 ]
 
@@ -63,7 +64,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'db'),
         'USER': os.getenv('DB_USER', 'developer'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'Passw0rd33'),
-        'HOST': 'db'
+        # 'HOST': 'db'
+        'HOST': '127.0.0.1'
     }
 }
 
