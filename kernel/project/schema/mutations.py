@@ -15,7 +15,7 @@ from utils.global_id import to_global_id
 
 class CreateProjectMutation(relay.ClientIDMutation):
     """
-
+    Мутация для создания проектов 
     """
     project = graphene.Field(ProjectNode)
 
@@ -44,7 +44,7 @@ class CreateProjectMutation(relay.ClientIDMutation):
 
 class EditProjectMutation(relay.ClientIDMutation):
     """
-
+    Мутация для изменения проекта   
     """
     project = graphene.Field(ProjectNode)
 
@@ -76,7 +76,7 @@ class EditProjectMutation(relay.ClientIDMutation):
 
 class DeleteProjectMutation(relay.ClientIDMutation):
     """
-
+    Мутация для удаления проекта 
     """
     message = graphene.String()
 
