@@ -15,10 +15,11 @@ from tasks.models import Task
 @atomic
 def create_task(
     title: str,
-    project: Project,
+    project_id: int,
     status: int = 0
 ) -> Task:
     try:
+        project = Project.objects.get(pk=project_id)
         cache.delete(key='tasks')
         task = Task.objects.create(
             title=title,
@@ -38,7 +39,7 @@ def delete_task(
     try:
         task: Task = Task.objects.get(pk=task_id)
         cache.delete(key='tasks')
-        task.objects.delete()
+        task.delete()
     except Exception as err:
         raise Exception(err)
     return True
@@ -56,14 +57,11 @@ def edit_task(
     try:
         task: Task = Task.objects.get(pk=task_id)
         _kwargs = kwargs.get('kwargs')
-        print(_kwargs, args)
         for attr_name, value in _kwargs.items():
-            print('attr_name= ', attr_name, 'value= ', value)
-            setattr(task, attr_name, value)
-            print('attr saved')
+            if value is not None:
+                setattr(task, attr_name, value)
 
         task.save()
-        print('task saved')
         return task
     except Exception as err:
         raise Exception(err)
@@ -83,7 +81,7 @@ def get_tasks() -> QuerySet:
         )
         return cache_
     else:
-        tasks = Task.objects.filter(is_archive=False).all()
+        tasks = Task.objects.filter().all()
         cache.set(
             key='tasks',
             value=tasks,
@@ -106,7 +104,7 @@ def get_tasks_for_project(project: Project) -> QuerySet:
         )
         return cache_
     else:
-        tasks = Task.objects.filter(project=project, is_archive=False).all()
+        tasks = Task.objects.filter(project=project).all()
         cache.set(
             key=f'tasks_proj{project_id}',
             value=tasks,

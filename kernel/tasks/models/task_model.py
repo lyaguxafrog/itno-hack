@@ -32,5 +32,5 @@ class Task(models.Model):
 
     status = models.SmallIntegerField(
         choices = OPTION_CHOICES,
-        null=False,
+        null=True,
     )
