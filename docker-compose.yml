@@ -36,7 +36,7 @@ services:
       - db
       
 
-  dev-nginx:
+  nginx:
     image: staticfloat/nginx-certbot
     depends_on:
       - web 
