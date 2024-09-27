@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # APPS:
-
+    'tasks',
 ]
 
 MIDDLEWARE = [
