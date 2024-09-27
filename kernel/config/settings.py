@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-
+from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -107,6 +107,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 GRAPHENE = {
     "SCHEMA": "config.schema.schema"
+}
+
+GRAPHQL_JWT = {
+    "JWT_COOKIE_NAME": "auth",
+    "JWT_REFRESH_TOKEN_COOKIE_NAME": "auth-refresh",
+    "JWT_COOKIE_SECURE": os.getenv("DEBUG") == "False",
+    "JWT_COOKIE_PATH": "/",
+    "JWT_COOKIE_DOMAIN": None,
+    "JWT_COOKIE_SAMESITE": "Lax",
+    "JWT_VERIFY_EXPIRATION": True,
+    "WT_ALLOW_REFRESH": True,
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=5),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
 }
 
 try:

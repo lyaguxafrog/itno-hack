@@ -18,4 +18,13 @@ class UserNode(DjangoObjectType):
             "email",
             "username"
         ]
+        exclude = [
+            "password",
+            "first_name",
+            "last_name",
+            "is_active",
+            "last_login",
+            "is_staff",
+            "is_superuser"
+        ]
         interfaces = [relay.Node, ]
