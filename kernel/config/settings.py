@@ -9,6 +9,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG') == 'True'
 
+ALLOWED_HOSTS = ['*']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,9 +24,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # APPS:
-
-    'users'
-
+    'tasks',
+    'users',
+    'project',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'db'),
         'USER': os.getenv('DB_USER', 'developer'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'Passw0rd33'),
-        'HOST': 'db'
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': '5432',
     }
 }
 
@@ -109,6 +112,7 @@ GRAPHENE = {
     "SCHEMA": "config.schema.schema"
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GRAPHQL_JWT = {
     "JWT_COOKIE_NAME": "auth",
     "JWT_REFRESH_TOKEN_COOKIE_NAME": "auth-refresh",
