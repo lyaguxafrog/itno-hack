@@ -4,8 +4,13 @@ import graphene
 from graphene import ObjectType, Schema
 from project.schema import Mutations as ProjectMutation
 
+# from users.schema import Mutations as UserMutations
+from tasks.schema import Mutations as TaskMutation
 
-class Query(ObjectType):
+
+class Query(
+    ObjectType,
+):
     hello = graphene.String()
 
     def resolve_hello(root, info, **kwargs):
@@ -13,8 +18,9 @@ class Query(ObjectType):
 
 
 class Mutation(
+    ProjectMutation,
+    TaskMutation,
     ObjectType,
-    ProjectMutation
 ):
     pass
 

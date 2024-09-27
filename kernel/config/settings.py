@@ -9,6 +9,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG') == 'True'
 
+ALLOWED_HOSTS = ['*']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,9 +24,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # APPS:
-    'project',
+    'tasks',
     'users',
-
+    'project',
 ]
 
 MIDDLEWARE = [
@@ -65,8 +67,9 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'db'),
         'USER': os.getenv('DB_USER', 'developer'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'Passw0rd33'),
-        # 'HOST': 'db'
-        'HOST': '127.0.0.1'
+        # 'HOST': 'db',
+        'HOST': '127.0.0.1',
+        # 'PORT': '5432',
     }
 }
 
