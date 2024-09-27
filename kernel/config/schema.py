@@ -5,10 +5,11 @@ from graphene import ObjectType, Schema
 from project.schema import Mutations as ProjectMutation
 from project.schema import Query as ProjectQuery
 from tasks.schema import Mutations as TaskMutation
-
+from tasks.schema import Query as TaskQuery
 
 class Query(
     ProjectQuery,
+    TaskQuery,
     ObjectType,
 ):
     hello = graphene.String()

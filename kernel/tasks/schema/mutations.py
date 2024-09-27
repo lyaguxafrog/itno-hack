@@ -21,14 +21,17 @@ from utils import to_global_id
 
 
 class CreateTaksMutation(relay.ClientIDMutation):
+    """
+    Мутация для создания задачи
+    """
     task = graphene.Field(TaskTypeNode)
 
     class Input:
         title = graphene.String(required=True)
         status = graphene.Int(required=False)
-
+        project_id = graphene.ID(required=True)
     @staticmethod
-    @permission_required(perm="tasks.add_task")
+    # @permission_required(perm="tasks.add_task")
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
@@ -38,7 +41,7 @@ class CreateTaksMutation(relay.ClientIDMutation):
             task = create_task(
                 title=input['title'],
                 status=input['status'],
-                project=info.context.project,
+                project_id=input['project_id'],
             )
 
         except Exception as err:
@@ -48,6 +51,9 @@ class CreateTaksMutation(relay.ClientIDMutation):
 
 
 class EditTaskMutation(relay.ClientIDMutation):
+    """
+    Мутация для изменения задачи
+    """
     task = graphene.Field(type_=TaskTypeNode)
 
     class Input:
@@ -55,8 +61,8 @@ class EditTaskMutation(relay.ClientIDMutation):
         title = graphene.String(required=False)
         status = graphene.Int(required=False)
 
-    @classmethod
-    @permission_required(perm="tasks.edit_tasks")
+    @staticmethod
+    # @permission_required(perm="tasks.edit_tasks")
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
@@ -80,13 +86,16 @@ class EditTaskMutation(relay.ClientIDMutation):
 
 
 class DeleteTaskMutation(relay.ClientIDMutation):
+    """
+    Мутация для удаления задачи
+    """
     message = graphene.String()
 
     class Input:
         task_id = graphene.ID()
 
-    @classmethod
-    @permission_required(perm="tasks.delete_tasks")
+    @staticmethod
+    # @permission_required(perm="tasks.delete_tasks")
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
