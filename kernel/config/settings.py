@@ -3,6 +3,8 @@
 import os
 from datetime import timedelta
 
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -88,6 +90,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{os.getenv('REDIS_HOST', 'redis')}:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.timeweb.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'no-reply@makridenko.ru'  
+EMAIL_HOST_PASSWORD = 'twtohml3a2'  
+DEFAULT_FROM_EMAIL = 'no-reply@makridenko.ru'
+EMAIL_USE_TLS = True
 
 LANGUAGE_CODE = 'en-US'
 
