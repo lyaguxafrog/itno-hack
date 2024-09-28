@@ -26,7 +26,7 @@ export const Project = () => {
     },
   ];
 
-  const data = useAppSelector((state) => state['data-slice'].tasks)
+  const data = useAppSelector((state) => state['data-slice'].tasks);
 
   // useEffect(() => {
   //   dispatch(getTasks());
@@ -35,7 +35,7 @@ export const Project = () => {
   return (
     <div className="flex gap-3">
       {mockSlices.map((slice) => (
-        <Box key={slice.id} data={slice} tasks={data[slice.id] ?? []}/>
+        <Box key={slice.id} data={slice} tasks={data[slice.id] ?? []} />
       ))}
     </div>
   );
