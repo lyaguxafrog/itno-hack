@@ -3,6 +3,7 @@
 import graphene
 from graphene import ObjectType, Schema
 
+from users.schema import Mutation as UserMutation
 from project.schema import Mutations as ProjectMutation
 from project.schema import Query as ProjectQuery
 from organisation.schema import Mutations as OrganisationMutation
@@ -18,12 +19,12 @@ class Query(
 ):
 
     hello = graphene.String()
-
     def resolve_hello(root, info, **kwargs):
-        return 'world!'
+        return 'салам!'
 
 
 class Mutation(
+    UserMutation,
     OrganisationMutation,
     ProjectMutation,
     TaskMutation,

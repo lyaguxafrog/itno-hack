@@ -3,6 +3,7 @@ from graphene import relay
 from graphene_django import DjangoObjectType
 
 from organisation.models import Organisation 
+from users.schema.nodes import UserNode
 
 
 class OrganisationNode(DjangoObjectType):
