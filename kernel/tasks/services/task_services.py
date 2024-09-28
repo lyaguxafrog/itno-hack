@@ -32,6 +32,7 @@ def create_task(
     return task
 
 
+# TODO: Сделать проверку на возможноть удаления таски
 @atomic
 def delete_task(
     task_id: str
@@ -66,7 +67,7 @@ def edit_task(
     except Exception as err:
         raise Exception(err)
 
-
+# FIXME: Сделать вызов тасок по пользователю
 def get_tasks() -> QuerySet:
     """
     Функция для получения всех событий

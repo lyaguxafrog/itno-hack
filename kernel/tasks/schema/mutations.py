@@ -31,7 +31,7 @@ class CreateTaksMutation(relay.ClientIDMutation):
         status = graphene.Int(required=False)
         project_id = graphene.ID(required=True)
     @staticmethod
-    # @permission_required(perm="tasks.add_task")
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
@@ -62,7 +62,7 @@ class EditTaskMutation(relay.ClientIDMutation):
         status = graphene.Int(required=False)
 
     @staticmethod
-    # @permission_required(perm="tasks.edit_tasks")
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
@@ -95,7 +95,7 @@ class DeleteTaskMutation(relay.ClientIDMutation):
         task_id = graphene.ID()
 
     @staticmethod
-    # @permission_required(perm="tasks.delete_tasks")
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,

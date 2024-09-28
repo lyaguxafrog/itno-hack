@@ -2,24 +2,30 @@
 
 import graphene
 from graphene import ObjectType, Schema
-from project.schema import Mutations as ProjectMutation
-from project.schema import Query as ProjectQuery
-from tasks.schema import Mutations as TaskMutation
-from tasks.schema import Query as TaskQuery
+
+from users.schema import (
+    Mutation as UserMutation
+)
+
+from project.schema import (
+    Mutations as ProjectMutation,
+    Query as ProjectQuery
+)
+
+from tasks.schema import (
+    Mutations as TaskMutation,
+    Query as TaskQuery
+)
 
 class Query(
     ProjectQuery,
     TaskQuery,
     ObjectType,
 ):
-
-    hello = graphene.String()
-
-    def resolve_hello(root, info, **kwargs):
-        return 'world!'
-
+    pass
 
 class Mutation(
+    UserMutation,
     ProjectMutation,
     TaskMutation,
     ObjectType,
