@@ -1,4 +1,5 @@
 import { ITask } from '@/types';
 import { createAction } from '@reduxjs/toolkit';
 
-export const updateTasks = createAction<ITask[]>('updateTasks');
+export const updateTask = createAction<{task: ITask, columnId: number}>('updateTask');
+export const moveTask = createAction<{dragIndex: number, hoverIndex: number, columnId: number}>('moveTask');

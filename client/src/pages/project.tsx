@@ -1,15 +1,9 @@
 import { Box } from '@/components/kanban/box';
-import { Task } from '@/components/kanban/task';
-
-interface DropResult {
-  name: string;
-}
-const ItemTypes = {
-  BOX: 'box',
-};
+import { useAppSelector } from '@/helpers/hooks';
+import { IBox } from '@/types';
 
 export const Project = () => {
-  const mockSlices = [
+  const mockSlices: IBox[] = [
     {
       id: 1,
       title: 'backlog',
@@ -32,16 +26,16 @@ export const Project = () => {
     },
   ];
 
-  const data = [
-    { id: 0, title: 'something 0', columnId: 1 },
-    { id: 1, title: 'title 1', columnId: 1 },
-    { id: 2, title: 'title 2', columnId: 1 },
-  ];
+  const data = useAppSelector((state) => state['data-slice'].tasks)
+
+  // useEffect(() => {
+  //   dispatch(getTasks());
+  // }, [])
 
   return (
-    <div className="py-3 flex w-[calc(100vw - 282px)]">
+    <div className="flex gap-3">
       {mockSlices.map((slice) => (
-        <Box key={slice.id}>asda sdasda</Box>
+        <Box key={slice.id} data={slice} tasks={data[slice.id] ?? []}/>
       ))}
     </div>
   );
