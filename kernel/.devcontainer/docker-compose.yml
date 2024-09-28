@@ -6,7 +6,7 @@ services:
     shm_size: '256m'
     restart: on-failure
     ports:
-      - "5432:5432"
+      - "54323:5432"
     environment:
       POSTGRES_USER: developer
       POSTGRES_DB: db
