@@ -13,7 +13,7 @@ import {
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 
-export default function AddOrganization() {
+export default function AddProject() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,13 +23,13 @@ export default function AddOrganization() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Создание организации</DialogTitle>
-          <DialogDescription>Введите имя новой организации, чтобы добавить ее в список.</DialogDescription>
+          <DialogTitle>Создание проекта</DialogTitle>
+          <DialogDescription>Введите название нового проекта, чтобы добавить его в список.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Имя организации</Label>
-            <Input placeholder="Введите имя организации" />
+            <Label htmlFor="name">Название проекта</Label>
+            <Input placeholder="Введите название проекта" />
           </div>
         </div>
         <DialogFooter>
@@ -37,7 +37,7 @@ export default function AddOrganization() {
             <Button type="button" variant="secondary">
               Close
             </Button>
-            <Button type="submit">Создать организацию</Button>
+            <Button type="submit">Создать проект</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

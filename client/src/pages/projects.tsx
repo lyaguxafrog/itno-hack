@@ -1,4 +1,4 @@
-import AddOrganization from '@/components/organizations/add-organization';
+import AddProject from '@/components/projects/add-project';
 import ProjectsCard from '@/components/projects/projects-card';
 
 export default function Projects() {
@@ -12,7 +12,7 @@ export default function Projects() {
         <ProjectsCard />
         <ProjectsCard />
         <ProjectsCard />
-        <AddOrganization />
+        <AddProject />
       </div>
     </div>
   );
