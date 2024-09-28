@@ -4,6 +4,10 @@ from .user_services import (
     create_user
 )
 
+from .invite_services import (
+    invite_user_to_project
+)
+
 from .auth_services import (
     gen_jwt_token
 )
