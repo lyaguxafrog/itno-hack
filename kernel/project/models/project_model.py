@@ -18,11 +18,12 @@ class Project(models.Model):
         'organisation.Organisation',
         related_name='organisation',
         on_delete=models.CASCADE,
-        verbose_name=_("Организация")
+        verbose_name=_("Организация"),
+        null=True,
     )
     owner = models.ForeignKey(
         'auth.User',
-        related_name='owner',
+        related_name='project_owner',
         on_delete=models.CASCADE,
         verbose_name=_("Владелец")
     ) 

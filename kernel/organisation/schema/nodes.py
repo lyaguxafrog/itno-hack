@@ -2,7 +2,7 @@ import graphene
 from graphene import relay
 from graphene_django import DjangoObjectType
 
-from project.models import Organisation 
+from organisation.models import Organisation 
 
 
 class OrganisationNode(DjangoObjectType):
