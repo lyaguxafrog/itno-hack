@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  db:
+    image: 'postgres:latest'
+    shm_size: '256m'
+    restart: on-failure
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_DB: db
+      POSTGRES_PASSWORD: Passw0rd33
+    ports:
+      - 5432:5432
+
+  kernel:
+    user: vscode
+    env_file:
+      - ../.env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - '..:/workspace:cached'
+    ports:
+      - '8000:8000'
+    command: sleep infinity
