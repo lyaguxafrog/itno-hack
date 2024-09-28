@@ -1,11 +1,13 @@
+Project ItInnoHack {
+  database_type: 'PostgreSQL'
+}
+
 
 table users {
   id int [pk]
 
   username char(64) [not null, unique]
   hash_password char(1024) [not null]
-
-
 }
 
 
@@ -25,5 +27,5 @@ table tasks {
 
   project int [ref: > projects.id]
   title char(64) [not null]
-  status enum(0,2) [not null, default: True]
+  status enum(0,2) [not null, default: 0]
 }
