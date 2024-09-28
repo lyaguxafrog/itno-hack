@@ -1,11 +1,12 @@
 import { SliceNames } from '@/helpers/consts';
+import { ITask, IUser } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { moveTask, updateTask } from './actions';
-import { ITask } from '@/types';
-import { getTasks } from './api-actions';
+import { getTasks, registerUser, signIn, signOut } from './api-actions';
 
 interface IDataInitialState {
   tasks: { [key: number]: ITask[] };
+  user: IUser | null;
 }
 const dataInitialState: IDataInitialState = {
   tasks: {
@@ -16,6 +17,7 @@ const dataInitialState: IDataInitialState = {
     ],
     2: [{ id: 3, title: 'column2', status: 2 }],
   },
+  user: null,
 };
 
 export const dataSlice = createSlice({
@@ -47,6 +49,20 @@ export const dataSlice = createSlice({
         const res: { [key: number]: ITask[] } = {};
         payload.allTasks.edges.forEach((edge) => res[edge.node.status].push(edge.node));
         state.tasks = res;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.user = payload.registerUser.user;
+      })
+      .addCase(signIn.fulfilled, (state, { payload }) => {
+        state.user = {
+          id: '1',
+          email: 'user@example.com',
+          username: payload.signIn.payload.username,
+          dateJoined: 'last',
+        };
+      })
+      .addCase(signOut.fulfilled, (state, { payload }) => {
+        state.user = null;
       });
   },
 });
