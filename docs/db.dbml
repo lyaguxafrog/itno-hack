@@ -3,6 +3,16 @@ Project ItInnoHack {
 }
 
 
+table organisantion {
+  id int [pk]
+
+  name char(64) [not null, unique]
+  create_date timestamp [not null]
+
+  owner int [ref: > users.id]
+  user int [ref: <> users.id]
+}
+
 table users {
   id int [pk]
 
@@ -10,17 +20,16 @@ table users {
   hash_password char(1024) [not null]
 }
 
-
 table projects {
   id int [pk]
 
   name char(1024) [not null]
   create_date timestamp [not null]
 
+  organisantion int [ref: > organisantion.id]
   owner int [note: "fk", ref: > users.id]
   user int [ref: <> users.id]
 } 
-
 
 table tasks {
   id int [pk]
