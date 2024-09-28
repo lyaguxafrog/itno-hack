@@ -15,6 +15,8 @@ def random_sequence(length: int = 16):
     char = string.ascii_letters + string.digits  
     return ''.join(random.choice(char) for _ in range(length))
 
+
+
 def send_invite_email(
     invite_code: str,
     user_email: str
@@ -22,8 +24,12 @@ def send_invite_email(
     subject = 'Приглашение'
     message = f'Ссылка: /invite/{invite_code}'
     email_from = 'no-reply@makridenko.ru' 
-    recipient = user_email 
-    send_mail(subject, message, email_from, recipient)
+    recipient = [user_email] 
+    print(recipient)
+    status = send_mail(subject, message, email_from, recipient)
+    print(status)
+
+
 
 @atomic
 def invite_user_to_project(
@@ -38,6 +44,8 @@ def invite_user_to_project(
     user_info_str = json.dumps(user_info)
     invite_code = random_sequence()
     cache.set(invite_code, user_info_str, timeout=60*60*3)
+    
+    
     send_invite_email(invite_code, user.email)
     value = cache.get(invite_code)
     print(value)
