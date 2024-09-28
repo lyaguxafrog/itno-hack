@@ -6,5 +6,3 @@ export type AppDispatchType = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatchType>();
 export const useAppSelector: TypedUseSelectorHook<StateType> = useSelector;
-
-export { useDnd } from './useDnd';

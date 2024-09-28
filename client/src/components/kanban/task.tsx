@@ -1,24 +1,25 @@
+import { useAppDispatch } from '@/helpers/hooks';
+import { updateTask } from '@/store/actions';
 import { ITask } from '@/types';
 import { useDrag } from 'react-dnd';
 
-interface ItaskData {
+interface ItaskProps {
   data: ITask;
+  index: number;
 }
-interface DropResult {
-  name: string;
-}
-const ItemTypes = {
-  BOX: 'box',
-};
 
-export const Task = ({ data }: ItaskData) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.BOX,
-    item: { name },
+export const Task = ({ data, index }: ItaskProps) => {
+  const dispatch = useAppDispatch();
+
+  const [_, drag] = useDrag(() => ({
+    type: 'task',
+    item: () => {
+      return { id: data.id, index };
+    },
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<DropResult>();
+      const dropResult = monitor.getDropResult<{ name: string; columnId: number }>();
       if (item && dropResult) {
-        alert(`You dropped ${item.name} into ${dropResult.name}!`);
+        dispatch(updateTask({ task: data, columnId: dropResult.columnId }));
       }
     },
     collect: (monitor) => ({
@@ -28,7 +29,7 @@ export const Task = ({ data }: ItaskData) => {
   }));
 
   return (
-    <div ref={drag} draggable="true" data-id={data.id}>
+    <div ref={drag} data-id={data.id} className="w-full h-10 bg-cyan-600">
       {data.title}
     </div>
   );

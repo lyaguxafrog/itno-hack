@@ -1,10 +1,13 @@
 import { routes } from '@/helpers/consts';
+import Login from '@/pages/login';
 import Organizations from '@/pages/organizations';
 import { Project } from '@/pages/project';
 import Projects from '@/pages/projects';
+import Register from '@/pages/register';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Route, Routes } from 'react-router-dom';
+import { Layout } from './layout';
 import { CombinedProviders } from './providers';
 
 // const LoginPage = lazy(() => import('pages/login/ui'));
@@ -24,29 +27,35 @@ export default function App() {
           }
         /> */}
         <Route
-          path={routes.login}
+          path={routes.home}
           element={
-            <DndProvider backend={HTML5Backend}>
-              <Project />
-            </DndProvider>
+            <Layout>
+              <DndProvider backend={HTML5Backend}>
+                <Project />
+              </DndProvider>
+            </Layout>
           }
         />
         <Route
           path={routes.projects}
           element={
-            <DndProvider backend={HTML5Backend}>
+            <Layout>
               <Projects />
-            </DndProvider>
+            </Layout>
           }
         />
         <Route
           path={routes.organizations}
           element={
-            <DndProvider backend={HTML5Backend}>
+            <Layout>
               <Organizations />
-            </DndProvider>
+            </Layout>
           }
         />
+
+        <Route path={routes.login} element={<Login />} />
+        <Route path={routes.register} element={<Register />} />
+
         {/* <Route path={routes.register} element={<RegisterPage />} />
         <Route path={routes.notFound} element={<NotFound />} />
         <Route

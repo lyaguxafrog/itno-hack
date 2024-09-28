@@ -3,7 +3,8 @@ export const routes = {
   projects: '/projects',
   organizations: '/organizations',
   project: '/project',
-  login: '/',
+  home: '/',
+  login: '/login',
   register: '/register',
   notFound: '/*',
 } as const;
