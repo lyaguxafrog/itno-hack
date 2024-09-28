@@ -5,4 +5,6 @@ from .organisation_services import (
     delete_organisation,
     edit_organisation,
     get_organisation,
+    remove_user_from_organisation,
+    add_user_to_organisation,
 ) 

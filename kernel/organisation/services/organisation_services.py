@@ -17,12 +17,17 @@ def create_organisation(
     try:
         cache.delete(key='organisation')
         owner = User.objects.get(pk=owner_id)
-        user = User.objects.filter(pk__in=user_id_list)
+
+        if user_id_list is not None:
+            user = User.objects.filter(pk__in=user_id_list)
+        else:
+            user = None
         organisation = Organisation.objects.create(
             name=name,
             owner=owner,
         )
-        organisation.user.set(user)
+        if user:
+            organisation.user.set(user)
         organisation.save()
     except Exception as err:
         raise Exception(err)
@@ -57,6 +62,46 @@ def edit_organisation(
     except Exception as err:
         raise Exception(err)
     return organisation 
+
+
+@atomic
+def add_user_to_organisation(
+    organisation_id: int,
+    user_id: int,
+) -> bool:
+    try:
+        cache.delete(key='organisation')
+        organisation = Organisation.objects.get(
+            pk=organisation_id,
+        )
+
+        user = User.objects.get(pk=user_id)
+        organisation.user.add(user)
+        organisation.save()
+
+    except Exception as err:
+        raise Exception(err)
+    return True  
+
+
+@atomic
+def remove_user_from_organisation(
+    organisation_id: int,
+    user_id: int,
+) -> bool:
+    try:
+        cache.delete(key='organisation')
+        organisation = Organisation.objects.get(
+            pk=organisation_id,
+        )
+
+        user = User.objects.get(pk=user_id)
+        organisation.user.remove(user)
+        organisation.save()
+
+    except Exception as err:
+        raise Exception(err)
+    return True  
 
 
 @atomic

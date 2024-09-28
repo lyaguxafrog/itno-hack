@@ -43,7 +43,7 @@ def create_project(
 def edit_project(
     project_id: int,
     name: str | None,
-    organisation_id: int,
+    organisation_id: int | None,
     owner_id: int | None,
     user_id_list: List[int] | None, 
 ) -> Project:
@@ -80,6 +80,7 @@ def add_user_to_project(
     user_id: int,
 ) -> bool:
     try:
+        cache.delete(key='project')
         project = Project.objects.get(
             pk=project_id,
         )
@@ -99,6 +100,7 @@ def remove_user_from_project(
     user_id: int,
 ) -> bool:
     try:
+        cache.delete(key='project')
         project = Project.objects.get(
             pk=project_id,
         )
@@ -129,7 +131,7 @@ def delete_project(
 
 def get_project() -> QuerySet:
     """
-    Функция для получения всех событий
+    Функция для получения всех проектов
     """
     cache_ = cache.get(key='project')
 

@@ -66,10 +66,11 @@ class EditProjectMutation(relay.ClientIDMutation):
     ):
         try:
             id = to_global_id(info, input['project_id'])
+            organisation_id = to_global_id(info, input['organisation_id'])
             project = edit_project(
                 project_id=id,
                 name=input['name'],
-                organisation_id=input['organisation_id'],
+                organisation_id=organisation_id,
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
             )
@@ -130,7 +131,7 @@ class AddUser(relay.ClientIDMutation):
         except Exception as err:
             message = 'fail to add'
             raise Exception(err)
-        return DeleteProjectMutation(message=message)
+        return AddUser(message=message)
 
 
 class DeleteUser(relay.ClientIDMutation):
@@ -171,5 +172,5 @@ class Mutation(
     create_project = CreateProjectMutation.Field()
     edit_project = EditProjectMutation.Field()
     delete_project = DeleteProjectMutation.Field()
-    add_user = AddUser.Field()
-    remove_user = DeleteUser.Field()
+    add_user_to_Project = AddUser.Field()
+    remove_user_from_Project = DeleteUser.Field()

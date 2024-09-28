@@ -37,11 +37,12 @@ class CreateTaksMutation(relay.ClientIDMutation):
         info: graphene.ResolveInfo,
         **input: Dict[str, any]
     ):
+        project_id = to_global_id(info, input['project_id'])
         try:
             task = create_task(
                 title=input['title'],
                 status=input['status'],
-                project_id=input['project_id'],
+                project_id=project_id,
             )
 
         except Exception as err:

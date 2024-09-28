@@ -8,6 +8,8 @@ from organisation.services import (
     create_organisation,
     edit_organisation,
     delete_organisation,
+    add_user_to_organisation,
+    remove_user_from_organisation,
 ) 
 
 from utils.global_id import to_global_id
@@ -96,10 +98,71 @@ class DeleteOrganisationMutation(relay.ClientIDMutation):
         return DeleteOrganisationMutation(message=message)
 
 
+class AddUserOrganisation(relay.ClientIDMutation):
+    """
+    Мутация для добавления user 
+    """
+    message = graphene.String()
+
+    class Input:
+        organisation_id = graphene.ID()
+        user_id = graphene.ID()
+
+    @staticmethod
+    def mutate_and_get_payload(
+        root: Any,
+        info: graphene.ResolveInfo,
+        **input: Dict[str, any]
+    ):
+        try:
+            id = to_global_id(info, input['organisation_id'])
+            add_user_to_organisation(
+                organisation_id=id,
+                user_id=input['user_id']
+            )
+            message = 'successful add'
+        except Exception as err:
+            message = 'fail to add'
+            raise Exception(err)
+        return AddUserOrganisation(message=message)
+
+
+class DeleteUserOrganisation(relay.ClientIDMutation):
+    """
+    Мутация для удаления user 
+    """
+    message = graphene.String()
+
+    class Input:
+        organisation_id = graphene.ID()
+        user_id = graphene.ID()
+
+    @staticmethod
+    def mutate_and_get_payload(
+        root: Any,
+        info: graphene.ResolveInfo,
+        **input: Dict[str, any]
+    ):
+        try:
+            id = to_global_id(info, input['organisation_id'])
+            remove_user_from_organisation(
+                organisation_id=id,
+                user_id=input['user_id']
+            )
+            message = 'successful delete'
+        except Exception as err:
+            message = 'fail to delete'
+            raise Exception(err)
+        return DeleteUserOrganisation(message=message)
+
+
+
 class Mutation(
     ObjectType
 ):
     create_organisation = CreateOrganisationMutation.Field()
     edit_organisation = EditOrganisationMutation.Field()
     delete_organisation = DeleteOrganisationMutation.Field()
+    add_user_to_Organisation = AddUserOrganisation.Field()
+    remove_user_from_Organisation = DeleteUserOrganisation.Field()
 
