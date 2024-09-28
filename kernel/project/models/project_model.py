@@ -16,7 +16,7 @@ class Project(models.Model):
 
     organisation = models.ForeignKey(
         'organisation.Organisation',
-        related_name='organisation',
+        related_name='projects',
         on_delete=models.CASCADE,
         verbose_name=_("Организация"),
         null=True,
