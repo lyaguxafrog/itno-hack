@@ -55,7 +55,6 @@ def create_user(
 
     return user
 
-
 def get_user() -> QuerySet:
     """
     сервис для получения юзера

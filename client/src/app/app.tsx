@@ -9,6 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './layout';
 import { CombinedProviders } from './providers';
+import { PrivateRoute } from './private-route';
 
 // const LoginPage = lazy(() => import('pages/login/ui'));
 // const ProjectPage = lazy(() => import('pages/project/ui'));
@@ -27,12 +28,14 @@ export default function App() {
           }
         /> */}
         <Route
-          path={routes.home}
+          path={routes.project}
           element={
             <Layout>
-              <DndProvider backend={HTML5Backend}>
-                <Project />
-              </DndProvider>
+              <PrivateRoute>
+                <DndProvider backend={HTML5Backend}>
+                  <Project />
+                </DndProvider>
+              </PrivateRoute>
             </Layout>
           }
         />
@@ -40,15 +43,19 @@ export default function App() {
           path={routes.projects}
           element={
             <Layout>
-              <Projects />
+              <PrivateRoute>
+                <Projects />
+              </PrivateRoute>
             </Layout>
           }
         />
         <Route
-          path={routes.organizations}
+          path={routes.home}
           element={
             <Layout>
-              <Organizations />
+              <PrivateRoute>
+                <Organizations />
+              </PrivateRoute>
             </Layout>
           }
         />

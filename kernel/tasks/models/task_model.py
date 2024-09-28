@@ -20,7 +20,7 @@ class Task(models.Model):
 
     project = models.ForeignKey(
         "project.Project",
-        related_name="project",
+        related_name="tasks",
         on_delete=models.CASCADE,
         null=False,
     )
