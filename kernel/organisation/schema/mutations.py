@@ -2,21 +2,21 @@ from typing import Dict, Any
 import graphene
 from graphene import relay, ObjectType
 
-from .nodes import ProjectNode
-from project.services import (
-    create_project,
-    edit_project,
-    delete_project,
+from .nodes import OrganisationNode
+
+from organisation.services import (
+    create_organisation,
+    edit_organisation,
+    delete_organisation,
 ) 
 
 from utils.global_id import to_global_id
 
 
-class CreateProjectMutation(relay.ClientIDMutation):
+class CreateOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для создания проектов 
     """
-    project = graphene.Field(ProjectNode)
+    organisation = graphene.Field(OrganisationNode)
 
     class Input:
         name = graphene.String() 
@@ -30,7 +30,7 @@ class CreateProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, Any]
     ):
         try:
-            project = create_project(
+            organisation = create_organisation(
                 name=input['name'],
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
@@ -38,17 +38,16 @@ class CreateProjectMutation(relay.ClientIDMutation):
         except Exception as err:
             raise Exception(err)
 
-        return CreateProjectMutation(project=project)
+        return CreateOrganisationMutation(organisation=organisation)
 
 
-class EditProjectMutation(relay.ClientIDMutation):
+class EditOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для изменения проекта   
     """
-    project = graphene.Field(ProjectNode)
+    organisation = graphene.Field(OrganisationNode)
 
     class Input:
-        project_id = graphene.ID() 
+        organisation_id = graphene.ID() 
         name = graphene.String() 
         owner_id = graphene.ID()
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
@@ -60,9 +59,9 @@ class EditProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            project = edit_project(
-                project_id=id,
+            id = to_global_id(info, input['organisation_id'])
+            organisation = edit_organisation(
+                organisation_id=id,
                 name=input['name'],
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
@@ -70,17 +69,16 @@ class EditProjectMutation(relay.ClientIDMutation):
         except Exception as err:
             raise Exception(err)
 
-        return EditProjectMutation(project=project)
+        return EditOrganisationMutation(organisation=organisation)
 
 
-class DeleteProjectMutation(relay.ClientIDMutation):
+class DeleteOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для удаления проекта 
     """
     message = graphene.String()
 
     class Input:
-        project_id = graphene.ID()
+        organisation_id = graphene.ID()
 
     @staticmethod
     def mutate_and_get_payload(
@@ -89,18 +87,19 @@ class DeleteProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            delete_project(project_id=id)
+            id = to_global_id(info, input['organisation_id'])
+            delete_organisation(organisation_id=id)
             message = 'successful delete'
         except Exception as err:
             message = 'fail to delete'
             raise Exception(err)
-        return DeleteProjectMutation(message=message)
+        return DeleteOrganisationMutation(message=message)
 
 
 class Mutation(
     ObjectType
 ):
-    create_project = CreateProjectMutation.Field()
-    edit_project = EditProjectMutation.Field()
-    delete_project = DeleteProjectMutation.Field()
+    create_organisation = CreateOrganisationMutation.Field()
+    edit_organisation = EditOrganisationMutation.Field()
+    delete_organisation = DeleteOrganisationMutation.Field()
+
