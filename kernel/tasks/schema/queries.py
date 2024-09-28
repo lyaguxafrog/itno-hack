@@ -2,6 +2,7 @@
 
 import graphene
 from graphene_django import DjangoConnectionField
+from graphql_jwt.decorators import login_required
 
 from .nodes import TaskTypeNode
 
@@ -18,6 +19,8 @@ class Query(graphene.ObjectType):
     )
     all_tasks = DjangoConnectionField(TaskTypeNode)
 
+    @login_required
     def resolve_task_by_id(root, info, id):
         new_id = to_global_id(info, id)
+
         return get_tasks().get(pk=new_id)

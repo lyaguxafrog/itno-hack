@@ -30,6 +30,7 @@ class CreateTaksMutation(relay.ClientIDMutation):
         title = graphene.String(required=True)
         status = graphene.Int(required=False)
         project_id = graphene.ID(required=True)
+
     @staticmethod
     @login_required
     def mutate_and_get_payload(
@@ -54,6 +55,7 @@ class EditTaskMutation(relay.ClientIDMutation):
     """
     Мутация для изменения задачи
     """
+
     task = graphene.Field(type_=TaskTypeNode)
 
     class Input:
