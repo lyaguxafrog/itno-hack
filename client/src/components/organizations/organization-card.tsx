@@ -1,6 +1,7 @@
+import { iOrg } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
-export default function OrganizationCard() {
+export default function OrganizationCard({ name }: iOrg) {
   return (
     <Card className="bg-white shadow-md rounded-lg h-60 w-72 hover:-translate-y-3 transition-all cursor-pointer">
       <CardHeader>

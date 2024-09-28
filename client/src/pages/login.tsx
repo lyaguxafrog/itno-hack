@@ -1,8 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { routes } from '@/helpers/consts';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const loginClickHandler = () => {
+    navigate(routes.home);
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <form className="border border-black rounded-md p-10 flex-col w-[25%]">
@@ -14,7 +22,7 @@ export default function Login() {
           <Label htmlFor="password">Password</Label>
           <Input placeholder="Password" type="password" />
 
-          <Button>Войти</Button>
+          <Button onClick={loginClickHandler}>Войти</Button>
           <div className="flex items-center mt-5">
             <span className="mr-2">Нет аккаунта?</span>
             <a href="register" className="text-blue-400">
