@@ -2,10 +2,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class Project(models.Model):
+class Organisation(models.Model):
 
     name = models.CharField(
-        max_length=1024,
+        max_length=64,
         verbose_name=_("Название"),
     )
     create_date = models.DateTimeField(
@@ -14,12 +14,6 @@ class Project(models.Model):
     )
 
 
-    organisation = models.ForeignKey(
-        'organisation.Organisation',
-        related_name='organisation',
-        on_delete=models.CASCADE,
-        verbose_name=_("Организация")
-    )
     owner = models.ForeignKey(
         'auth.User',
         related_name='owner',
