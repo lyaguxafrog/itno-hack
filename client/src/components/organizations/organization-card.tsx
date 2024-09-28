@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
+import { IOrg } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { routes } from '@/helpers/consts';
 
-export default function OrganizationCard() {
+export default function OrganizationCard({ name }: IOrg) {
   return (
-    <Link to="/projects">
+    <Link to={routes.projects}>
       <Card className="bg-white shadow-md rounded-lg h-60 w-72 hover:-translate-y-3 transition-all cursor-pointer">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold text-gray-800">Название организации</CardTitle>
+          <CardTitle className="text-xl font-semibold text-gray-800">{name}</CardTitle>
           <div className="h-[2px] bg-gray-300 w-full my-2" />
         </CardHeader>
         <CardContent>

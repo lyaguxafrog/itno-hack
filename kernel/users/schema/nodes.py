@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
+import graphene
 from graphene import relay
 from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
-
+from project.schema.nodes import ProjectNode
 
 class UserNode(DjangoObjectType):
     """
@@ -28,3 +28,8 @@ class UserNode(DjangoObjectType):
             "is_superuser"
         ]
         interfaces = [relay.Node, ]
+
+    projects = graphene.List(ProjectNode)
+
+    def resolve_projects(self, info):
+        return self.projects.all() if self.projects.exists() else []
