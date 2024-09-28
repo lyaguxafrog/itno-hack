@@ -16,7 +16,7 @@ class Organisation(models.Model):
 
     owner = models.ForeignKey(
         'auth.User',
-        related_name='owner',
+        related_name='organisation_owner',
         on_delete=models.CASCADE,
         verbose_name=_("Владелец")
     ) 

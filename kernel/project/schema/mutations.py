@@ -7,7 +7,8 @@ from project.services import (
     create_project,
     edit_project,
     delete_project,
-    get_project,
+    add_user_to_project,
+    remove_user_from_project,
 ) 
 
 from utils.global_id import to_global_id
@@ -20,8 +21,9 @@ class CreateProjectMutation(relay.ClientIDMutation):
     project = graphene.Field(ProjectNode)
 
     class Input:
-        name = graphene.String() 
-        owner_id = graphene.ID()
+        name = graphene.String(required=True) 
+        organisation_id = graphene.ID(required=False)
+        owner_id = graphene.ID(required=True)
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
@@ -33,6 +35,7 @@ class CreateProjectMutation(relay.ClientIDMutation):
         try:
             project = create_project(
                 name=input['name'],
+                organisation_id=input['organisation_id'],
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
             )
@@ -49,9 +52,10 @@ class EditProjectMutation(relay.ClientIDMutation):
     project = graphene.Field(ProjectNode)
 
     class Input:
-        project_id = graphene.ID() 
-        name = graphene.String() 
-        owner_id = graphene.ID()
+        project_id = graphene.ID(required=True) 
+        name = graphene.String(required=False) 
+        organisation_id = graphene.ID(required=False)
+        owner_id = graphene.ID(required=False)
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
@@ -65,6 +69,7 @@ class EditProjectMutation(relay.ClientIDMutation):
             project = edit_project(
                 project_id=id,
                 name=input['name'],
+                organisation_id=input['organisation_id'],
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
             )
@@ -99,9 +104,72 @@ class DeleteProjectMutation(relay.ClientIDMutation):
         return DeleteProjectMutation(message=message)
 
 
+class AddUser(relay.ClientIDMutation):
+    """
+    Мутация для добавления user 
+    """
+    message = graphene.String()
+
+    class Input:
+        project_id = graphene.ID()
+        user_id = graphene.ID()
+
+    @staticmethod
+    def mutate_and_get_payload(
+        root: Any,
+        info: graphene.ResolveInfo,
+        **input: Dict[str, any]
+    ):
+        try:
+            id = to_global_id(info, input['project_id'])
+            add_user_to_project(
+                project_id=id,
+                user_id=input['user_id']
+            )
+            message = 'successful add'
+        except Exception as err:
+            message = 'fail to add'
+            raise Exception(err)
+        return DeleteProjectMutation(message=message)
+
+
+class DeleteUser(relay.ClientIDMutation):
+    """
+    Мутация для удаления user 
+    """
+    message = graphene.String()
+
+    class Input:
+        project_id = graphene.ID()
+        user_id = graphene.ID()
+
+    @staticmethod
+    def mutate_and_get_payload(
+        root: Any,
+        info: graphene.ResolveInfo,
+        **input: Dict[str, any]
+    ):
+        try:
+            id = to_global_id(info, input['project_id'])
+            remove_user_from_project(
+                project_id=id,
+                user_id=input['user_id']
+            )
+            message = 'successful delete'
+        except Exception as err:
+            message = 'fail to delete'
+            raise Exception(err)
+        return DeleteUser(message=message)
+
+
+
+
+
 class Mutation(
     ObjectType
 ):
     create_project = CreateProjectMutation.Field()
     edit_project = EditProjectMutation.Field()
     delete_project = DeleteProjectMutation.Field()
+    add_user = AddUser.Field()
+    remove_user = DeleteUser.Field()
