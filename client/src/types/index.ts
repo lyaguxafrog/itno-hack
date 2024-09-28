@@ -1,3 +1,5 @@
+import { SVGProps } from 'react';
+
 export interface ITask {
   id: number;
   title: string;
@@ -17,3 +19,7 @@ export interface ITasksResponse {
     }[];
   };
 }
+
+export type IconSvgProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};

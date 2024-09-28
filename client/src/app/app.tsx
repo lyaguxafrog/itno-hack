@@ -1,9 +1,11 @@
-import { Route, Routes } from 'react-router-dom';
-import { CombinedProviders } from './providers';
 import { routes } from '@/helpers/consts';
+import Organizations from '@/pages/organizations';
 import { Project } from '@/pages/project';
+import Projects from '@/pages/projects';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Route, Routes } from 'react-router-dom';
+import { CombinedProviders } from './providers';
 
 // const LoginPage = lazy(() => import('pages/login/ui'));
 // const ProjectPage = lazy(() => import('pages/project/ui'));
@@ -26,6 +28,22 @@ export default function App() {
           element={
             <DndProvider backend={HTML5Backend}>
               <Project />
+            </DndProvider>
+          }
+        />
+        <Route
+          path={routes.projects}
+          element={
+            <DndProvider backend={HTML5Backend}>
+              <Projects />
+            </DndProvider>
+          }
+        />
+        <Route
+          path={routes.organizations}
+          element={
+            <DndProvider backend={HTML5Backend}>
+              <Organizations />
             </DndProvider>
           }
         />

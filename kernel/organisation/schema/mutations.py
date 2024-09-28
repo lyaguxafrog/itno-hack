@@ -2,28 +2,27 @@ from typing import Dict, Any
 import graphene
 from graphene import relay, ObjectType
 
-from .nodes import ProjectNode
-from project.services import (
-    create_project,
-    edit_project,
-    delete_project,
-    add_user_to_project,
-    remove_user_from_project,
+from .nodes import OrganisationNode
+
+from organisation.services import (
+    create_organisation,
+    edit_organisation,
+    delete_organisation,
+    add_user_to_organisation,
+    remove_user_from_organisation,
 ) 
 
 from utils.global_id import to_global_id
 
 
-class CreateProjectMutation(relay.ClientIDMutation):
+class CreateOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для создания проектов 
     """
-    project = graphene.Field(ProjectNode)
+    organisation = graphene.Field(OrganisationNode)
 
     class Input:
-        name = graphene.String(required=True) 
-        organisation_id = graphene.ID(required=False)
-        owner_id = graphene.ID(required=True)
+        name = graphene.String() 
+        owner_id = graphene.ID()
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
@@ -33,29 +32,26 @@ class CreateProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, Any]
     ):
         try:
-            project = create_project(
+            organisation = create_organisation(
                 name=input['name'],
-                organisation_id=input['organisation_id'],
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
             )
         except Exception as err:
             raise Exception(err)
 
-        return CreateProjectMutation(project=project)
+        return CreateOrganisationMutation(organisation=organisation)
 
 
-class EditProjectMutation(relay.ClientIDMutation):
+class EditOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для изменения проекта   
     """
-    project = graphene.Field(ProjectNode)
+    organisation = graphene.Field(OrganisationNode)
 
     class Input:
-        project_id = graphene.ID(required=True) 
-        name = graphene.String(required=False) 
-        organisation_id = graphene.ID(required=False)
-        owner_id = graphene.ID(required=False)
+        organisation_id = graphene.ID() 
+        name = graphene.String() 
+        owner_id = graphene.ID()
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
@@ -65,29 +61,26 @@ class EditProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            organisation_id = to_global_id(info, input['organisation_id'])
-            project = edit_project(
-                project_id=id,
+            id = to_global_id(info, input['organisation_id'])
+            organisation = edit_organisation(
+                organisation_id=id,
                 name=input['name'],
-                organisation_id=organisation_id,
                 owner_id=input['owner_id'],
                 user_id_list=input['user_id_list'], 
             )
         except Exception as err:
             raise Exception(err)
 
-        return EditProjectMutation(project=project)
+        return EditOrganisationMutation(organisation=organisation)
 
 
-class DeleteProjectMutation(relay.ClientIDMutation):
+class DeleteOrganisationMutation(relay.ClientIDMutation):
     """
-    Мутация для удаления проекта 
     """
     message = graphene.String()
 
     class Input:
-        project_id = graphene.ID()
+        organisation_id = graphene.ID()
 
     @staticmethod
     def mutate_and_get_payload(
@@ -96,23 +89,23 @@ class DeleteProjectMutation(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            delete_project(project_id=id)
+            id = to_global_id(info, input['organisation_id'])
+            delete_organisation(organisation_id=id)
             message = 'successful delete'
         except Exception as err:
             message = 'fail to delete'
             raise Exception(err)
-        return DeleteProjectMutation(message=message)
+        return DeleteOrganisationMutation(message=message)
 
 
-class AddUser(relay.ClientIDMutation):
+class AddUserOrganisation(relay.ClientIDMutation):
     """
     Мутация для добавления user 
     """
     message = graphene.String()
 
     class Input:
-        project_id = graphene.ID()
+        organisation_id = graphene.ID()
         user_id = graphene.ID()
 
     @staticmethod
@@ -122,26 +115,26 @@ class AddUser(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            add_user_to_project(
-                project_id=id,
+            id = to_global_id(info, input['organisation_id'])
+            add_user_to_organisation(
+                organisation_id=id,
                 user_id=input['user_id']
             )
             message = 'successful add'
         except Exception as err:
             message = 'fail to add'
             raise Exception(err)
-        return AddUser(message=message)
+        return AddUserOrganisation(message=message)
 
 
-class DeleteUser(relay.ClientIDMutation):
+class DeleteUserOrganisation(relay.ClientIDMutation):
     """
     Мутация для удаления user 
     """
     message = graphene.String()
 
     class Input:
-        project_id = graphene.ID()
+        organisation_id = graphene.ID()
         user_id = graphene.ID()
 
     @staticmethod
@@ -151,26 +144,25 @@ class DeleteUser(relay.ClientIDMutation):
         **input: Dict[str, any]
     ):
         try:
-            id = to_global_id(info, input['project_id'])
-            remove_user_from_project(
-                project_id=id,
+            id = to_global_id(info, input['organisation_id'])
+            remove_user_from_organisation(
+                organisation_id=id,
                 user_id=input['user_id']
             )
             message = 'successful delete'
         except Exception as err:
             message = 'fail to delete'
             raise Exception(err)
-        return DeleteUser(message=message)
-
-
+        return DeleteUserOrganisation(message=message)
 
 
 
 class Mutation(
     ObjectType
 ):
-    create_project = CreateProjectMutation.Field()
-    edit_project = EditProjectMutation.Field()
-    delete_project = DeleteProjectMutation.Field()
-    add_user_to_Project = AddUser.Field()
-    remove_user_from_Project = DeleteUser.Field()
+    create_organisation = CreateOrganisationMutation.Field()
+    edit_organisation = EditOrganisationMutation.Field()
+    delete_organisation = DeleteOrganisationMutation.Field()
+    add_user_to_Organisation = AddUserOrganisation.Field()
+    remove_user_from_Organisation = DeleteUserOrganisation.Field()
+
