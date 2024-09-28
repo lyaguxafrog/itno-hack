@@ -7,7 +7,7 @@ export interface ITask {
   project: IProject;
 }
 
-export interface iOrg {
+export interface IOrg {
   id: string;
   name: string;
   createDate: string;

@@ -1,9 +1,9 @@
-import AddOrganization from '@/components/organizations/add-organization';
+import AddProject from '@/components/projects/add-project';
 import ProjectsCard from '@/components/projects/projects-card';
 import { IProject } from '@/types';
 
 export default function Projects() {
-  const projects = [] as IProject[];
+  const projects = [] as IProject[]; // TODO: redux import
 
   return (
     <div className="h-full">
@@ -14,7 +14,7 @@ export default function Projects() {
         {projects.map((project) => (
           <ProjectsCard {...project} />
         ))}
-        <AddOrganization />
+        <AddProject />
       </div>
     </div>
   );

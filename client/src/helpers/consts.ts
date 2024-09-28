@@ -1,8 +1,8 @@
 export const routes = {
   profile: '/profile',
-  projects: '/projects/:id',
+  projects: '/projects',
   organizations: '/organizations',
-  project: '/project/:id',
+  project: '/project',
   home: '/',
   login: '/login',
   register: '/register',

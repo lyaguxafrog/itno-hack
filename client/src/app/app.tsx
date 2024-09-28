@@ -28,7 +28,7 @@ export default function App() {
           }
         /> */}
         <Route
-          path={routes.projects}
+          path={routes.project}
           element={
             <Layout>
               <PrivateRoute>
