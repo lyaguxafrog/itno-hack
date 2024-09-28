@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 from graphql_jwt.decorators import jwt_cookie
 
 
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('api/', jwt_cookie(csrf_exempt(GraphQLView.as_view(graphiql=True)))),
@@ -19,9 +20,6 @@ urlpatterns = [
 
 
 
-urlpatterns += [
-    path('invite/<str:invite_code>/', invite_user, name='invite_user'),
-]
 
 # urlpatterns += [
 #     re_path(r'',

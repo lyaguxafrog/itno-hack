@@ -6,12 +6,16 @@ from django.core.exceptions import ValidationError
 from graphql.error import GraphQLError
 import graphene
 from graphene import relay, ObjectType
-
+from graphql_jwt.decorators import login_required
 
 from .nodes import UserNode
+from project.schema.nodes import ProjectNode
+from project.models import Project
+
 from users.services import (
     create_user, 
     invite_user_to_project,
+    accept_user_to_project,
 )
 from utils.global_id import to_global_id
 
@@ -84,8 +88,43 @@ class InviteUserMutation(relay.ClientIDMutation):
         return InviteUserMutation(message=message)
 
 
+class AcceptToProjectMutation(relay.ClientIDMutation):
+    """
+    Mutation to accept or reject user 
+    """
+
+    project = graphene.Field(ProjectNode)
+
+    class Input:
+        invite_code = graphene.String(required=True)
+
+
+    @staticmethod
+    @login_required
+    def mutate_and_get_payload(
+        root: Any,
+        info: graphene.ResolveInfo,
+        **input: Dict[str, Any]
+    ):
+        try:
+            invite_code = input['invite_code']
+            user_id = info.context.user.id
+            
+            response = accept_user_to_project(
+                user_id=user_id,
+                invite_code=invite_code, 
+            )
+
+            project = Project.objects.get(pk=response)                
+        except Exception as err:
+            raise Exception(err) 
+
+        return AcceptToProjectMutation(project=project)
+
+
 class Mutation(
     ObjectType
 ):
     register_user = RegisterUserMutation.Field()
     invite_user = InviteUserMutation.Field()
+    accept_user = AcceptToProjectMutation.Field()

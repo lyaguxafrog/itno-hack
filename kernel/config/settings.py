@@ -105,7 +105,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.timeweb.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'no-reply@makridenko.ru'  
-EMAIL_HOST_PASSWORD = '#^57-#O.g_4Y4N'  
+EMAIL_HOST_PASSWORD = 'twtohml3a2'  
 DEFAULT_FROM_EMAIL = 'no-reply@makridenko.ru'
 EMAIL_USE_TLS = True
 

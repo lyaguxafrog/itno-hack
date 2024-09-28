@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db.transaction import atomic
+from django.core.cache import cache
+from django.db.models import QuerySet
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
@@ -52,3 +54,26 @@ def create_user(
     )
 
     return user
+
+
+def get_user() -> QuerySet:
+    """
+    сервис для получения юзера
+    """
+    cache_ = cache.get(key='user')
+
+    if cache_:
+        cache.set(
+            key='user',
+            value=cache_,
+            timeout=1209600
+        )
+        return cache_
+    else:
+        user = User.objects.filter().all()
+        cache.set(
+            key='user',
+            value=user,
+            timeout=1209600
+        )
+        return user 
