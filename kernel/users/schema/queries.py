@@ -11,6 +11,7 @@ from organisation.services import get_organisation
 from utils.global_id import to_global_id 
 from users.services import get_user
 
+
 class Query(graphene.ObjectType):
     """
     Query для получения организации

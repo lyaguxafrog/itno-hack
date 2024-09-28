@@ -11,10 +11,14 @@ from django.views.generic import TemplateView
 from graphql_jwt.decorators import jwt_cookie
 
 
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('api/', jwt_cookie(csrf_exempt(GraphQLView.as_view(graphiql=True)))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
 
 
 # urlpatterns += [
