@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from typing import Dict, Any
 import graphene
 from graphene import relay, ObjectType
+from graphql_jwt.decorators import login_required
 
 from .nodes import ProjectNode
 from project.services import (
@@ -8,33 +11,35 @@ from project.services import (
     edit_project,
     delete_project,
     get_project,
-) 
+)
 
 from utils.global_id import to_global_id
 
 
 class CreateProjectMutation(relay.ClientIDMutation):
     """
-    Мутация для создания проектов 
+    Мутация для создания проектов
     """
     project = graphene.Field(ProjectNode)
 
     class Input:
-        name = graphene.String() 
+        name = graphene.String()
         owner_id = graphene.ID()
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
         **input: Dict[str, Any]
     ):
         try:
+            # FIXME: ID gql не цифрой
             project = create_project(
                 name=input['name'],
                 owner_id=input['owner_id'],
-                user_id_list=input['user_id_list'], 
+                user_id_list=input['user_id_list'],
             )
         except Exception as err:
             raise Exception(err)
@@ -44,17 +49,18 @@ class CreateProjectMutation(relay.ClientIDMutation):
 
 class EditProjectMutation(relay.ClientIDMutation):
     """
-    Мутация для изменения проекта   
+    Мутация для изменения проекта
     """
     project = graphene.Field(ProjectNode)
 
     class Input:
-        project_id = graphene.ID() 
-        name = graphene.String() 
+        project_id = graphene.ID()
+        name = graphene.String()
         owner_id = graphene.ID()
         user_id_list = graphene.List(graphene.String, ids=graphene.List(graphene.ID))
 
     @staticmethod
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
@@ -66,7 +72,7 @@ class EditProjectMutation(relay.ClientIDMutation):
                 project_id=id,
                 name=input['name'],
                 owner_id=input['owner_id'],
-                user_id_list=input['user_id_list'], 
+                user_id_list=input['user_id_list'],
             )
         except Exception as err:
             raise Exception(err)
@@ -76,7 +82,7 @@ class EditProjectMutation(relay.ClientIDMutation):
 
 class DeleteProjectMutation(relay.ClientIDMutation):
     """
-    Мутация для удаления проекта 
+    Мутация для удаления проекта
     """
     message = graphene.String()
 
@@ -84,6 +90,7 @@ class DeleteProjectMutation(relay.ClientIDMutation):
         project_id = graphene.ID()
 
     @staticmethod
+    @login_required
     def mutate_and_get_payload(
         root: Any,
         info: graphene.ResolveInfo,
