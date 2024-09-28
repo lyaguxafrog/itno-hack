@@ -1,6 +1,7 @@
 export const routes = {
   profile: '/profile',
-  dashboard: '/dashboard',
+  projects: '/projects',
+  organizations: '/organizations',
   project: '/project',
   login: '/',
   register: '/register',

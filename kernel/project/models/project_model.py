@@ -21,6 +21,7 @@ class Project(models.Model):
         verbose_name=_("Организация"),
         null=True,
     )
+
     owner = models.ForeignKey(
         'auth.User',
         related_name='project_owner',
